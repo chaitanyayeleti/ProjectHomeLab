@@ -55,12 +55,16 @@
    touch traefik.yml
    touch config.yml
    ```
-- traefik
-  - Data
-    - config.yml
-    - traefik.yml
-    - acme.json
-  - Docke-compose.yaml
+
+   ``` bash 
+    ./traefik
+    ├── data
+    │   ├── acme.json
+    │   ├── config.yml
+    │   └── traefik.yml
+    └── docker-compose.yml
+   ```
+
 
 ## Once the file structure is created Copy the code from my repo files or clone it 
 
@@ -104,11 +108,36 @@
  ``` bash 
  docker network create proxy
  ```
+ - by defualt the is no auth for the dashboard we will create auth for the traefik dashboard
+ ``` bash 
+ echo $(htpasswd -nb "<USER>" "<PASSWORD>") | sed -e s/\\$/\\$\\$/g
+ # provide username and password it will generate username:hash | copy this
+ ```
+ - Copy the generated output and replace the label from docker-compose.yaml
+ ``` yaml
+ labels:
+  - "traefik.http.middlewares.traefik-auth.basicauth.users=user:hash"
+ ```
  - provide yourdomain details on labels ..... we completed all the required configuration 
  - ececute docker compose file to start traefik
  ```
  docker-compose up -d
  ```
+### accesing the dasboard of traefik 
+ - Once the docker is up we can acesses the dashboard using the subdomain which we provide on labels in my case it is  
+ ``` yaml
+     - "traefik.http.routers.traefik-secure.rule=Host(`traefik-dashboard.yourdomain.in`)"
+    traefik-dashboard.yourdomain.in
+ ```
+ - auth using given username and password.
+ - you updated the code to recreate/ update container use below cmd 
+
+ ``` bash 
+ docker-compose up -d --force-recreate
+ ```
+
+ - We made it wild card SSL certificate for 90 days auto-renew hosted on home or even in cloud 
+
 
 
 
