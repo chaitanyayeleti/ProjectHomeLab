@@ -62,8 +62,53 @@
     - acme.json
   - Docke-compose.yaml
 
-## Once the file structure is created Copy the code from my repo
+## Once the file structure is created Copy the code from my repo files or clone it 
 
+### DNS Verification and records pointing
+ - Recommended DNS provider **AzureDNS** or **Cloudflare** [Supported Providers](https://go-acme.github.io/lego/dns/azuredns/)
+ - if you are using cloudflare or AzureDNS or any dns provider for A record pointed to VPN Gateway
+ - CNAME * and value yourdomain so now whatever subdomain we use it will redirect to your domain
+
+ ### DNS Verification for wild card certificats 
+ - We are using Let's encrypt api to get the wild card certificates
+ - In traefik.yml file we are using cloudflare as dns provider below is the reference code from the treafik.yml file
+ ``` yaml
+ certificatesResolvers:
+  cloudflare: # you can choose any name here but what we gave same need to provide input in docker-ccompose.yaml file
+    acme:
+      email: #your email for certification renewal notification it is mandatory
+      storage: acme.json
+      dnsChallenge:
+        provider: cloudflare
+        #disablePropagationCheck: true # uncomment this if you have issues pulling certificates through cloudflare, By setting this flag to true disables the need to wait for the propagation of the TXT record to all authoritative name servers.
+        resolvers:
+          - "1.1.1.1:53"
+          - "1.0.0.1:53"
+  ```
+ - here provider as cloudflare if we are using azure mention azure or azuredns
+ - In Docker-compose.yml file at environment we need to provide input attributes for to get certification verification
+
+ ``` yaml
+  environment:
+  - CF_API_EMAIL= email of cloudflare 
+  - CF_DNS_API_TOKEN= API token from cloudflare with Zone.DNS permission
+  # - CF_API_KEY=YOUR_API_KEY
+  # be sure to use the correct one depending on if you are using a token or key
+ ```
+ - on the same file in labels wee need to pass tag of certificate provider in my case im using cloudflare 
+ ``` yaml 
+  labels:
+    - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
+ ```
+ - Now create docker network 
+ ``` bash 
+ docker network create proxy
+ ```
+ - provide yourdomain details on labels ..... we completed all the required configuration 
+ - ececute docker compose file to start traefik
+ ```
+ docker-compose up -d
+ ```
 
 
 
