@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  bitwardenrs:
+    image: vaultwarden/server
+    container_name: vaultwarden
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+    environment:
+      - WEBSOCKET_ENABLED=true
+      - WEB_VAULT_ENABLED=true
+      - SIGNUPS_ALLOWED=false
+      # Comment admin token to disable admin interface
+      - ADMIN_TOKEN=${ADMIN_TOKEN}
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bitwarden.rule=Host(`${TRAEFIK_VAULTWARDEN}`)"
+      - "traefik.http.routers.bitwarden.entrypoints=https"
+      - "traefik.http.routers.bitwarden.tls=true"
+      - "traefik.http.routers.bitwarden.tls.certresolver=cloudflare"
+      # Watchtower Update
+      #- "com.centurylinklabs.watchtower.enable=true"
+      # Ip filtering
+      #- "traefik.http.routers.bitwarden.middlewares=api@internal"
+      - "traefik.http.services.bitwarden.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
+    logging:
+      driver: "syslog"
+      options:
+        tag: "Bitwarden"
+
+networks:
+  proxy:
+    external: true
