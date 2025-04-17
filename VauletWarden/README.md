@@ -36,7 +36,7 @@
 
 ## access the website 
  - using your subdomain.yourdomain.in/admin for admin access
- - subdomain.yourdomain.in for normal access
+ - sub-domain.yourdomain.in for normal access
 
 ## Features 
  - Orginazation/team levle Vault 
