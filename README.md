@@ -8,7 +8,7 @@
 - rasberry Pi 4/5
 
 ## Sotware Prerequisites
-- Ubuntu or RasberryPi OS # Rasberry Pi 4/5 supports multiple OS i prefer ubuntu
+- Ubuntu or RasberryPi OS # Rasberry Pi 4/5 supports multiple OS i prefer RasberryPi OS
 - Docker
 - WireGuard # VPN 
 
