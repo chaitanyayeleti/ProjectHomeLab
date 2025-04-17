@@ -1,14 +1,14 @@
-# Traefik- Home Lab setup using Rasberrypi 4
+# Traefik- Home Lab setup using Rasberrypi 4/5
 
 
 ## Prerequisites
 
 - DNS- AzureDNS or Cloudflare # or any traefik Supported dns provider
 - Virtual Machine - Standard B1s # as a VPN Gateway
-- rasberry Pi 4
+- rasberry Pi 4/5
 
 ## Sotware Prerequisites
-- Ubuntu or RasberryPi OS # Rasberry Pi 4 supports multiple OS i prefer ubuntu
+- Ubuntu or RasberryPi OS # Rasberry Pi 4/5 supports multiple OS i prefer ubuntu
 - Docker
 - WireGuard # VPN 
 
@@ -40,7 +40,7 @@
 ## End of all networking and VPN related config 
 
 # Install Docker & Docker-compose  
- - on the client machine/ rasberry pi 4 install both docker and docker-compose by using below CMD
+ - on the client machine/ rasberry pi 4/5 install both docker and docker-compose by using below CMD
    ``` bash
    sudo apt-get install docker.io docker-compose -y
    ```
