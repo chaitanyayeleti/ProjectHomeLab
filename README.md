@@ -30,7 +30,7 @@
   - ececute the below mentioned CMD on VPN GateWay machine
     ``` bash
     sudo iptables -t nat -A PREROUTING -i eth0 -p tcp -m tcp --dport 80 -j DNAT --to-destination 172.16.0.12:80 # you can use same port or port fowrding . eth0 and wg0 are the interface you are telling to forward the packet
-    sudo iptables -A FORWARD -i **eth0** -o wg0 -p tcp -m tcp --dport 80 -j ACCEPT  # understand properly the highleted once for port forwarding happens
+    sudo iptables -A FORWARD -i **eth0 ** -o wg0 -p tcp -m tcp --dport 80 -j ACCEPT  # understand properly the highleted once for port forwarding happens
     ```
 - Execute both the CMD's for all the required ports for you like 80,443,8080,53 depends on your requirement in my view 80 and 443 is fine for us
 - After the execution save the IP Tables by below CMD
